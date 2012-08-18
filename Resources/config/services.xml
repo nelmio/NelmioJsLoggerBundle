@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="nelmio_js_monolog.logger.class">Nelmio\JsLoggerBundle\Logger</parameter>
+    </parameters>
+
+    <services>
+        <service id="nelmio_js_monolog.logger" class="%nelmio_js_monolog.logger.class%">
+            <argument type="service" id="logger" />
+            <argument>%nelmio_js_monolog.allowed_levels%</argument>
+            <tag name="monolog.logger" channel="frontend" />
+        </service>
+    </services>
+</container>
