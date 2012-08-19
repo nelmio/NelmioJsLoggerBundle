@@ -26,9 +26,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->arrayNode('allowed_levels')
-                    ->addDefaultsIfNotSet()
-                    ->default($levels)
-                    ->children()
+                    ->defaultValue($levels)
+                    ->prototype('scalar')
                         ->validate()
                             ->ifNotInArray($levelsCI)
                             ->thenInvalid('The level %s is not supported. Please choose one of '.json_encode($levels))
