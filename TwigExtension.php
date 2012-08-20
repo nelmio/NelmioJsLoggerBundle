@@ -32,6 +32,7 @@ window.onerror = function(errorMsg, file, line) {
         '&level=$level' +
         '&context[file]=' + e(file) +
         '&context[line]=' + e(line) +
+        '&context[browser]=' + e(navigator.userAgent) +
         '&context[page]=' + e(document.location.href);
 };
 JS;
