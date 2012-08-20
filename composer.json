@@ -11,7 +11,7 @@
         },
         {
             "name": "Symfony Community",
-            "homepage": "https://github.com/nelmio/NelmioCorsBundle/contributors"
+            "homepage": "https://github.com/nelmio/NelmioJsLoggerBundle/contributors"
         }
     ],
     "require": {
