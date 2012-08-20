@@ -26,15 +26,21 @@ class TwigExtension extends \Twig_Extension
         $url = addslashes($this->router->generate('nelmio_js_logger_log'));
 
         $js = <<<JS
-window.onerror = function(errorMsg, file, line) {
-    var e = encodeURIComponent;
-    (new Image()).src = '$url?msg=' + e(errorMsg) +
-        '&level=$level' +
-        '&context[file]=' + e(file) +
-        '&context[line]=' + e(line) +
-        '&context[browser]=' + e(navigator.userAgent) +
-        '&context[page]=' + e(document.location.href);
-};
+(function () {
+    var oldErrorHandler = window.onerror;
+    window.onerror = function(errorMsg, file, line) {
+        var e = encodeURIComponent;
+        if (oldErrorHandler) {
+            oldErrorHandler(errorMsg, file, line);
+        }
+        (new Image()).src = '$url?msg=' + e(errorMsg) +
+            '&level=$level' +
+            '&context[file]=' + e(file) +
+            '&context[line]=' + e(line) +
+            '&context[browser]=' + e(navigator.userAgent) +
+            '&context[page]=' + e(document.location.href);
+    };
+})();
 JS;
 
         if ($includeScriptTag) {
