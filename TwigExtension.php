@@ -42,9 +42,10 @@ class TwigExtension extends \Twig_Extension
     };
 })();
 JS;
+        $js = preg_replace('{\n *}', '', $js);
 
         if ($includeScriptTag) {
-            $js = "<script>\n$js\n</script>";
+            $js = "<script>$js</script>";
         }
 
         return $js;
@@ -67,8 +68,10 @@ var $function = function(level, message, contextData) {
 };
 JS;
 
+        $js = preg_replace('{\n *}', '', $js);
+
         if ($includeScriptTag) {
-            $js = "<script>\n$js\n</script>";
+            $js = "<script>$js</script>";
         }
 
         return $js;
