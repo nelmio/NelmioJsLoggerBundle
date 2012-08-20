@@ -6,8 +6,19 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class Logger
 {
-    protected $logger;
-    protected $allowedLevels;
+    private $logger;
+    private $allowedLevels;
+
+    private $levelToMethod = array(
+        'emergency' => 'emerg',
+        'alert' => 'alert',
+        'critical' => 'crit',
+        'error' => 'err',
+        'warning' => 'warn',
+        'notice' => 'notice',
+        'info' => 'info',
+        'debug' => 'debug',
+    );
 
     public function __construct(LoggerInterface $logger, array $allowedLevels)
     {
@@ -24,7 +35,7 @@ class Logger
             return false;
         }
 
-        $this->logger->{'add'.$level}($message, $context);
+        $this->logger->{$this->levelToMethod[$level]}($message, $context);
 
         return true;
     }
