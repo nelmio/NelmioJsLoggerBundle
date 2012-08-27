@@ -15,7 +15,7 @@ class LogController extends Controller
         $context = $request->query->get('context', array());
 
         if ($this->get('nelmio_js_logger.logger')->write($level, $message, $context)) {
-            return new Response('OK', 201);
+            return new Response(base64_decode('R0lGODdhAQABAIAAAAAAAAAAACwAAAAAAQABAAACAkQBADs'), 201, array('Content-Type' => 'image/gif'));
         }
 
         return new Response('', 400);
