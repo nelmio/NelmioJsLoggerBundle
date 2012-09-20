@@ -28,10 +28,12 @@ class Logger
 
     public function write($level, $message, array $context = array())
     {
-        if (!in_array(strtolower($level), $this->allowedLevels)) {
+        if (!$message) {
             return false;
         }
-        if (!$message) {
+
+        $level = strtolower($level);
+        if (!in_array($level, $this->allowedLevels)) {
             return false;
         }
 
