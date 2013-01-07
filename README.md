@@ -9,7 +9,7 @@ Add this bundle to your `composer.json` file:
 
     {
         "require": {
-            "nelmio/js-logger-bundle": "dev-master"
+            "nelmio/js-logger-bundle": "~1.0"
         }
     }
 
