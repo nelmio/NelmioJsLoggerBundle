@@ -20,5 +20,10 @@
     "autoload": {
         "psr-0": { "Nelmio\\JsLoggerBundle": "" }
     },
-    "target-dir": "Nelmio/JsLoggerBundle"
+    "target-dir": "Nelmio/JsLoggerBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
