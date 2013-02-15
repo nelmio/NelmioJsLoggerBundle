@@ -69,3 +69,21 @@ Here is the default configuration that exposes all levels:
     # app/config/config.yml
     nelmio_js_logger:
         allowed_levels: ['DEBUG', 'INFO', 'NOTICE', 'WARNING', 'ERROR', 'CRITICAL', 'ALERT', 'EMERGENCY']
+
+## Properly tracking scripts in other domains
+
+If an error occurs in a script from another domain, browser same origin policy will 
+make it to be logged with a generic message, file and line number (like
+`Script error. {"file":"","line":"0", ...}`). To properly track these scripts move 
+them to your domain or [load them using CORS](https://developer.mozilla.org/en-US/docs/HTML/CORS_settings_attributes):
+
+```html
+<script src="//code.jquery.com/jquery-1.9.0.min.js" crossorigin></script>
+```
+
+Note that [browser support for `<script crossorigin>` varies](http://blog.errorception.com/2012/12/catching-cross-domain-js-errors.html):
+
+> As of this writing, only Firefox supports reporting errors for cross-domain
+> scripts. All WebKit browsers including Chrome is expected to support this very 
+> soon. This isn't a problem with IE at all, since IE already reports errors 
+> to window.onerror irrespective of the domain (yay, security!).
