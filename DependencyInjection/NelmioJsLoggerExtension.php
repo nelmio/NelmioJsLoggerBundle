@@ -26,6 +26,8 @@ class NelmioJsLoggerExtension extends Extension
             return strtolower($level);
         }, $config['allowed_levels']);
         $container->setParameter('nelmio_js_logger.allowed_levels', $levels);
+        $container->setParameter('nelmio_js_logger.errors_to_ignore', $config['errors_to_ignore']);
+        $container->setParameter('nelmio_js_logger.scripts_to_ignore', $config['scripts_to_ignore']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

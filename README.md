@@ -70,6 +70,15 @@ Here is the default configuration that exposes all levels:
     nelmio_js_logger:
         allowed_levels: ['DEBUG', 'INFO', 'NOTICE', 'WARNING', 'ERROR', 'CRITICAL', 'ALERT', 'EMERGENCY']
 
+You can also restrict the logging by ignoring some errors or scripts with this configuration:
+
+    # app/config/config.yml
+    nelmio_js_logger:
+        errors_to_ignore:
+            - originalCreateNotification
+        scripts_to_ignore:
+            - https://graph.facebook.com
+
 ## Properly tracking scripts in other domains
 
 If an error occurs in a script from another domain, browser same origin policy will 
