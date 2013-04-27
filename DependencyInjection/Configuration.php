@@ -35,6 +35,14 @@ class Configuration implements ConfigurationInterface
                     ->end()
                     ->cannotBeEmpty()
                 ->end()
+                ->arrayNode('errors_to_ignore')
+                    ->defaultValue(array())
+                    ->prototype('scalar')->end()
+                ->end()
+                ->arrayNode('scripts_to_ignore')
+                    ->defaultValue(array())
+                    ->prototype('scalar')->end()
+                ->end()
             ->end()
         ;
 
