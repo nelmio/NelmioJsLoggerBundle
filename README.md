@@ -80,6 +80,9 @@ with this configuration:
         ignore_url_prefixes:
             - https://graph.facebook.com
 
+The URL matches as a prefix to the script URL, and the message will match if
+the ignored string is found anywhere in the message.
+
 ## Properly tracking scripts in other domains
 
 If an error occurs in a script from another domain, browser same origin policy will
