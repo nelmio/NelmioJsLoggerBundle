@@ -13,8 +13,8 @@
         <service id="nelmio_js_logger.logger" class="%nelmio_js_logger.logger.class%">
             <argument type="service" id="logger" />
             <argument>%nelmio_js_logger.allowed_levels%</argument>
-            <argument>%nelmio_js_logger.errors_to_ignore%</argument>
-            <argument>%nelmio_js_logger.scripts_to_ignore%</argument>
+            <argument>%nelmio_js_logger.ignore_messages%</argument>
+            <argument>%nelmio_js_logger.ignore_url_prefixes%</argument>
             <tag name="monolog.logger" channel="frontend" />
         </service>
 

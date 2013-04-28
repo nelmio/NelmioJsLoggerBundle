@@ -70,20 +70,21 @@ Here is the default configuration that exposes all levels:
     nelmio_js_logger:
         allowed_levels: ['DEBUG', 'INFO', 'NOTICE', 'WARNING', 'ERROR', 'CRITICAL', 'ALERT', 'EMERGENCY']
 
-You can also restrict the logging by ignoring some errors or scripts with this configuration:
+You can also restrict the logging by ignoring some messages or scripts URLs
+with this configuration:
 
     # app/config/config.yml
     nelmio_js_logger:
-        errors_to_ignore:
+        ignore_messages:
             - originalCreateNotification
-        scripts_to_ignore:
+        ignore_url_prefixes:
             - https://graph.facebook.com
 
 ## Properly tracking scripts in other domains
 
-If an error occurs in a script from another domain, browser same origin policy will 
+If an error occurs in a script from another domain, browser same origin policy will
 make it to be logged with a generic message, file and line number (like
-`Script error. {"file":"","line":"0", ...}`). To properly track these scripts move 
+`Script error. {"file":"","line":"0", ...}`). To properly track these scripts move
 them to your domain or [load them using CORS](https://developer.mozilla.org/en-US/docs/HTML/CORS_settings_attributes):
 
 ```html
@@ -93,6 +94,6 @@ them to your domain or [load them using CORS](https://developer.mozilla.org/en-U
 Note that [browser support for `<script crossorigin>` varies](http://blog.errorception.com/2012/12/catching-cross-domain-js-errors.html):
 
 > As of this writing, only Firefox supports reporting errors for cross-domain
-> scripts. All WebKit browsers including Chrome is expected to support this very 
-> soon. This isn't a problem with IE at all, since IE already reports errors 
+> scripts. All WebKit browsers including Chrome is expected to support this very
+> soon. This isn't a problem with IE at all, since IE already reports errors
 > to window.onerror irrespective of the domain (yay, security!).

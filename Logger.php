@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 class Logger
 {
     /**
-     * @var \Symfony\Component\HttpKernel\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
@@ -33,27 +33,27 @@ class Logger
     /**
      * @var array
      */
-    private $errorsToIgnore;
+    private $ignoredMessages;
 
     /**
      * @var array
      */
-    private $scriptsToIgnore;
+    private $ignoredURLs;
 
     /**
      * Constructor
-     * 
-     * @param \Symfony\Component\HttpKernel\Log\LoggerInterface $logger
-     * @param array                                             $allowedLevels
-     * @param array                                             $errorsToIgnore
-     * @param array                                             $scriptsToIgnore
+     *
+     * @param LoggerInterface $logger
+     * @param array           $allowedLevels
+     * @param array           $ignoredMessages
+     * @param array           $ignoredURLs
      */
-    public function __construct(LoggerInterface $logger, array $allowedLevels, array $errorsToIgnore, array $scriptsToIgnore)
+    public function __construct(LoggerInterface $logger, array $allowedLevels, array $ignoredMessages, array $ignoredURLs)
     {
-        $this->logger          = $logger;
-        $this->allowedLevels   = $allowedLevels;
-        $this->errorsToIgnore  = $errorsToIgnore;
-        $this->scriptsToIgnore = $scriptsToIgnore;
+        $this->logger = $logger;
+        $this->allowedLevels = $allowedLevels;
+        $this->ignoredMessages = $ignoredMessages;
+        $this->ignoredURLs = $ignoredURLs;
     }
 
     public function write($level, $message, array $context = array())
@@ -67,13 +67,13 @@ class Logger
             return false;
         }
 
-        foreach ($this->scriptsToIgnore as $scriptToIgnore) {
+        foreach ($this->ignoredURLs as $scriptToIgnore) {
             if (strpos($context['file'], $scriptToIgnore) === 0) {
                 return false;
             }
         }
 
-        foreach ($this->errorsToIgnore as $errorToIgnore) {
+        foreach ($this->ignoredMessages as $errorToIgnore) {
             if (false !== strpos($message, $errorToIgnore)) {
                 return false;
             }
