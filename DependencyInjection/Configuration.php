@@ -24,6 +24,8 @@ class Configuration implements ConfigurationInterface
         $levelsCI = array_merge($levels, array_map('strtolower', $levels));
 
         $rootNode
+            ->fixXmlConfig('ignore_message')
+            ->fixXmlConfig('ignore_url_prefix', 'ignore_url_prefixes')
             ->children()
                 ->arrayNode('allowed_levels')
                     ->defaultValue($levels)
