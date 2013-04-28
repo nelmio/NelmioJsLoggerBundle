@@ -48,7 +48,7 @@ class Logger
      * @param array           $ignoredMessages
      * @param array           $ignoredURLs
      */
-    public function __construct(LoggerInterface $logger, array $allowedLevels, array $ignoredMessages, array $ignoredURLs)
+    public function __construct(LoggerInterface $logger, array $allowedLevels, array $ignoredMessages = array(), array $ignoredURLs = array())
     {
         $this->logger = $logger;
         $this->allowedLevels = $allowedLevels;
