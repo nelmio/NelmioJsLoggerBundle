@@ -27,18 +27,30 @@ class TwigExtension extends \Twig_Extension
 
         $js = <<<JS
 (function () {
-    var oldErrorHandler = window.onerror;
+    var key,
+        oldErrorHandler = window.onerror,
+        customContext = window.customContext || false,
+        customContextStr = '';
+
     window.onerror = function(errorMsg, file, line) {
         var e = encodeURIComponent;
+
         if (oldErrorHandler) {
             oldErrorHandler(errorMsg, file, line);
         }
+
+        if ('object' === typeof customContext) {
+            for (key in customContext) {
+                customContextStr += '&context[' + key + ']=' + e(customContext[key]);
+            }
+        }
+
         (new Image()).src = '$url?msg=' + e(errorMsg) +
             '&level=$level' +
             '&context[file]=' + e(file) +
             '&context[line]=' + e(line) +
             '&context[browser]=' + e(navigator.userAgent) +
-            '&context[page]=' + e(document.location.href);
+            '&context[page]=' + e(document.location.href) + customContextStr;
     };
 })();
 JS;
@@ -57,8 +69,10 @@ JS;
 
         $js = <<<JS
 var $function = function(level, message, contextData) {
-    var context, key, e = encodeURIComponent;
-    context = '';
+    var key,
+        context = '',
+        e = encodeURIComponent;
+
     if (contextData) {
         for (key in contextData) {
             context += '&context[' + key + ']=' + e(contextData[key]);
