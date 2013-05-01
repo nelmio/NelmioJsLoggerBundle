@@ -43,6 +43,13 @@ You can optionally change the level (default is ERROR) and remove the surroundin
 
     {{ nelmio_js_error_logger('WARNING', false) }}
 
+You can also optionally give some extra debug info by defining a global `window.customContext` in your page before calling the Nelmio error logger:
+
+    <script>
+        window.nelmio_js_logger_custom_context = { userinfo: 'some info', appinfo: 'another useful info' };
+        {{ nelmio_js_error_logger('ERROR', false) }}
+    </script>
+
 ## Manual Logging from JavaScript ##
 
 To expose the `log()` function to your JS code, use `nelmio_js_logger()`:
