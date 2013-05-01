@@ -29,7 +29,7 @@ class TwigExtension extends \Twig_Extension
 (function () {
     var key,
         oldErrorHandler = window.onerror,
-        customContext = window.customContext || false,
+        customContext = window.nelmio_js_logger_custom_context,
         customContextStr = '';
 
     window.onerror = function(errorMsg, file, line) {
@@ -41,7 +41,7 @@ class TwigExtension extends \Twig_Extension
 
         if ('object' === typeof customContext) {
             for (key in customContext) {
-                customContextStr += '&context[' + key + ']=' + e(customContext[key]);
+                customContextStr += '&context[' + e(key) + ']=' + e(customContext[key]);
             }
         }
 
@@ -75,7 +75,7 @@ var $function = function(level, message, contextData) {
 
     if (contextData) {
         for (key in contextData) {
-            context += '&context[' + key + ']=' + e(contextData[key]);
+            context += '&context[' + e(key) + ']=' + e(contextData[key]);
         }
     }
     (new Image()).src = '$url?msg=' + e(message) + '&level=' + e(level) + context;

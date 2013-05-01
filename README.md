@@ -46,7 +46,7 @@ You can optionally change the level (default is ERROR) and remove the surroundin
 You can also optionally give some extra debug info by defining a global `window.customContext` in your page before calling the Nelmio error logger:
 
     <script>
-        window.customContext = { userinfo: 'some info', appinfo: 'another useful info' };
+        window.nelmio_js_logger_custom_context = { userinfo: 'some info', appinfo: 'another useful info' };
         {{ nelmio_js_error_logger('ERROR', false) }}
     </script>
 
