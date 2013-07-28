@@ -33,17 +33,22 @@ Import the bundle's routing definition in `app/config/routing.yml`:
 
 ## Automated Error Logging ##
 
-The bundle exposes two twig functions that you should put in your site template somewhere.
+The bundle exposes two twig functions that you should put in your site
+template somewhere.
 
 To enable automatic logging of javascript errors, use `nelmio_js_error_logger()`:
 
     {{ nelmio_js_error_logger() }}
 
-You can optionally change the level (default is ERROR) and remove the surrounding `<script>..</script>` tags:
+You can optionally change the level (default is ERROR) and remove the surrounding
+`<script>..</script>` tags - don't forget to add them manually!:
 
-    {{ nelmio_js_error_logger('WARNING', false) }}
+    <script>
+        {{ nelmio_js_error_logger('WARNING', false) }}
+    </script>
 
-You can also optionally give some extra debug info by defining a global `window.customContext` in your page before calling the Nelmio error logger:
+You can also optionally give some extra context information by defining a global
+`window.nelmio_js_logger_custom_context` in the page:
 
     <script>
         window.nelmio_js_logger_custom_context = { userinfo: 'some info', appinfo: 'another useful info' };

@@ -27,13 +27,13 @@ class TwigExtension extends \Twig_Extension
 
         $js = <<<JS
 (function () {
-    var key,
-        oldErrorHandler = window.onerror,
-        customContext = window.nelmio_js_logger_custom_context,
-        customContextStr = '';
+    var oldErrorHandler = window.onerror;
 
     window.onerror = function(errorMsg, file, line) {
-        var e = encodeURIComponent;
+        var key,
+            e = encodeURIComponent,
+            customContext = window.nelmio_js_logger_custom_context,
+            customContextStr = '';
 
         if (oldErrorHandler) {
             oldErrorHandler(errorMsg, file, line);
@@ -71,11 +71,17 @@ JS;
 var $function = function(level, message, contextData) {
     var key,
         context = '',
+        customContext = window.nelmio_js_logger_custom_context,
         e = encodeURIComponent;
 
     if (contextData) {
         for (key in contextData) {
             context += '&context[' + e(key) + ']=' + e(contextData[key]);
+        }
+    }
+    if ('object' === typeof customContext) {
+        for (key in customContext) {
+            context += '&context[' + e(key) + ']=' + e(customContext[key]);
         }
     }
     (new Image()).src = '$url?msg=' + e(message) + '&level=' + e(level) + context;
