@@ -67,9 +67,11 @@ class Logger
             return false;
         }
 
-        foreach ($this->ignoredURLs as $scriptToIgnore) {
-            if (strpos($context['file'], $scriptToIgnore) === 0) {
-                return false;
+        if (!empty($context['file'])) {
+            foreach ($this->ignoredURLs as $scriptToIgnore) {
+                if (strpos($context['file'], $scriptToIgnore) === 0) {
+                    return false;
+                }
             }
         }
 
