@@ -1,3 +1,7 @@
+### 1.2.1 (2013-11-28)
+
+  * Fixed undefined index error when using window.log() together with ignored script URLs
+
 ### 1.2.0 (2013-07-29)
 
   * Added ability to give more context information by setting window.nelmio_js_logger_custom_context
