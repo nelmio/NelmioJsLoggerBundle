@@ -5,13 +5,9 @@ The **NelmioJsLoggerBundle** bundle allows you to log errors happening in the fr
 
 ## Installation ##
 
-Add this bundle to your `composer.json` file:
+Require the `nelmio/js-logger-bundle` package in your composer.json and update your dependencies.
 
-    {
-        "require": {
-            "nelmio/js-logger-bundle": "~1.0"
-        }
-    }
+    $ composer require nelmio/js-logger-bundle
 
 Register the bundle in `app/AppKernel.php`:
 
