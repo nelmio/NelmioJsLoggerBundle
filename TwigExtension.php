@@ -16,8 +16,8 @@ class TwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'nelmio_js_error_logger' => new \Twig_Function_Method($this, 'initErrorLogger', array('is_safe' => array('html', 'js'))),
-            'nelmio_js_logger' => new \Twig_Function_Method($this, 'initLogger', array('is_safe' => array('html', 'js'))),
+            new \Twig_SimpleFunction('nelmio_js_error_logger', array($this, 'initErrorLogger'), array('is_safe' => array('html', 'js'))),
+            new \Twig_SimpleFunction('nelmio_js_logger', array($this, 'initLogger'), array('is_safe' => array('html', 'js'))),
         );
     }
 
