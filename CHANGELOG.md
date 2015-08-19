@@ -1,3 +1,7 @@
+### 1.2.3 (2015-08-20)
+
+  * Fixed support for Twig 2.0
+
 ### 1.2.2 (2015-07-31)
 
   * Fixed deprecation notice with symfony 2.7
