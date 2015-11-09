@@ -29,17 +29,61 @@ class TwigExtension extends \Twig_Extension
 (function () {
     var oldErrorHandler = window.onerror;
 
-    window.onerror = function(errorMsg, file, line) {
+    window.onerror = function(errorMsg, file, line, col, error) {
         var key,
             e = encodeURIComponent,
             customContext = window.nelmio_js_logger_custom_context,
             customContextStr = '';
 
         if (oldErrorHandler) {
-            oldErrorHandler(errorMsg, file, line);
+            oldErrorHandler(errorMsg, file, line, col, error);
         }
 
-        if ('object' === typeof customContext) {
+        if( typeof StackTrace !== 'undefined' && typeof StackTrace.fromError === 'function'){
+            window.logWithStacktrace(errorMsg, file, line, col, error);
+        } else {
+            window.logWithoutStacktrace(errorMsg, file, line, col, error);
+        }
+    };
+
+    window.logWithStacktrace = function(errorMsg, file, line, col, error){
+        StackTrace.fromError(error).then(
+            function(stackframes){
+                    var req = new XMLHttpRequest();
+                    req.onerror = function(err){
+                                        if(typeof console !== 'undefined' && typeof console.log === 'function'){
+                                            console.log('An error occurred while trying to log an error using stacktrace.js!');
+                                        }
+                                        throw new Error('POST to $url failed.');
+                                    };
+                    req.onreadystatechange = function onreadystatechange() {
+                        if (req.readyState === 4) {
+                            if (req.status >= 200 && req.status < 400) {
+                                if(typeof console !== 'undefined' && typeof console.log === 'function'){
+                                    console.log('Error logged successfully to $url.');
+                                }
+                            } else {
+                                if(typeof console !== 'undefined' && typeof console.log === 'function'){
+                                    console.log('POST to $url failed with status: ' + req.status);
+                                }
+                                throw new Error('POST to $url failed with status: ' + req.status);
+                            }
+                        }
+                    };
+                    req.open('post', '$url');
+                    req.setRequestHeader('Content-Type', 'application/json');
+                    req.send(JSON.stringify({stack: stackframes, msg: errorMsg, level: '$level', context: {file, line, col}}));
+            }).catch(function(err){
+                if(typeof console !== 'undefined' && typeof console.log === 'function'){
+                    console.log('An error occurred while trying to log an error using stacktrace.js!');
+                }
+                window.logWithoutStacktrace('An error occurred while trying to log an error using stacktrace.js!', err.fileName, err.lineNumber, err.columnNumber, err);
+                window.logWithoutStacktrace(errorMsg, file, line, col, error);
+            });
+    };
+
+    window.logWithoutStacktrace = function(errorMsg, file, line, col, error){
+       if ('object' === typeof customContext) {
             for (key in customContext) {
                 customContextStr += '&context[' + e(key) + ']=' + e(customContext[key]);
             }
