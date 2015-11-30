@@ -72,7 +72,7 @@ class TwigExtension extends \Twig_Extension
                     };
                     req.open('post', '$url');
                     req.setRequestHeader('Content-Type', 'application/json');
-                    req.send(JSON.stringify({stack: stackframes, msg: errorMsg, level: '$level', context: {file, line, col}}));
+                    req.send(JSON.stringify({stack: stackframes, msg: errorMsg, level: '$level', context: {file: file, line: line, column: col, userAgent: navigator.userAgent, platform: navigator.platform}}));
             }).catch(function(err){
                 if(typeof console !== 'undefined' && typeof console.log === 'function'){
                     console.log('An error occurred while trying to log an error using stacktrace.js!');
