@@ -1,6 +1,6 @@
 {
     "name": "nelmio/js-logger-bundle",
-    "description": "Adds logging of JS errors in your Symfony2 application",
+    "description": "Adds logging of JS errors in your Symfony application",
     "keywords": ["js", "javascript", "logging", "log"],
     "type": "symfony-bundle",
     "license": "MIT",
@@ -15,12 +15,11 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.0"
+        "symfony/framework-bundle": "~2.0|~3.0"
     },
     "autoload": {
-        "psr-0": { "Nelmio\\JsLoggerBundle": "" }
+        "psr-4": { "Nelmio\\JsLoggerBundle\\": "" }
     },
-    "target-dir": "Nelmio/JsLoggerBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "1.2.x-dev"
