@@ -1,3 +1,7 @@
+### 1.2.4 (2016-01-04)
+
+  * Fixed support for Symfony 3.0
+
 ### 1.2.3 (2015-08-20)
 
   * Fixed support for Twig 2.0
