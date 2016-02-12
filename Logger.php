@@ -2,7 +2,7 @@
 
 namespace Nelmio\JsLoggerBundle;
 
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class Logger
 {
