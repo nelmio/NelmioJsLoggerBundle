@@ -1,3 +1,7 @@
+### 1.2.5 (2016-02-13)
+
+  * Fixed bug in Symfony 3 logger support
+
 ### 1.2.4 (2016-01-04)
 
   * Fixed support for Symfony 3.0
