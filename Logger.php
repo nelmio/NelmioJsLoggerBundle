@@ -20,11 +20,11 @@ class Logger
      * @var array
      */
     private $levelToMethod = array(
-        'emergency' => 'emerg',
+        'emergency' => 'emergency',
         'alert' => 'alert',
-        'critical' => 'crit',
-        'error' => 'err',
-        'warning' => 'warn',
+        'critical' => 'critical',
+        'error' => 'error',
+        'warning' => 'warning',
         'notice' => 'notice',
         'info' => 'info',
         'debug' => 'debug',
