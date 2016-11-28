@@ -9,17 +9,17 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
     public function provideMethodMappings()
     {
         return array(
-            array('emergency', 'emerg'),
+            array('emergency', 'emergency'),
             array('alert', 'alert'),
-            array('critical', 'crit'),
-            array('error', 'err'),
-            array('warning', 'warn'),
+            array('critical', 'critical'),
+            array('error', 'error'),
+            array('warning', 'warning'),
             array('notice', 'notice'),
             array('info', 'info'),
             array('debug', 'debug'),
 
             // also check uppercase works
-            array('WARNING', 'warn'),
+            array('WARNING', 'warning'),
         );
     }
 
@@ -28,7 +28,7 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
      */
     public function testMethodMapping($level, $expectedMethod)
     {
-        $mock = $this->getMock('Symfony\Component\HttpKernel\Log\LoggerInterface');
+        $mock = $this->getMock('Psr\Log\LoggerInterface');
         $mock
             ->expects($this->once())
             ->method($expectedMethod)
