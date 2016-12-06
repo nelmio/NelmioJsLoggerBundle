@@ -15,14 +15,14 @@
         }
     ],
     "require": {
-        "symfony/framework-bundle": "~2.0|~3.0"
+        "symfony/framework-bundle": "^2.7 || ^3.0"
     },
     "autoload": {
         "psr-4": { "Nelmio\\JsLoggerBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2.x-dev"
+            "dev-master": "1.3.x-dev"
         }
     }
 }
