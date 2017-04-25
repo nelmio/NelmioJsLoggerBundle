@@ -10,7 +10,7 @@ class TwigExtension extends \Twig_Extension
 
     private $stackTracePath;
 
-    public function __construct(UrlGeneratorInterface $router, $stackTracePath)
+    public function __construct(UrlGeneratorInterface $router, $stackTracePath = null)
     {
         $this->router = $router;
         $this->stackTracePath = $stackTracePath;
