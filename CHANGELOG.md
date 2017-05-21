@@ -1,3 +1,12 @@
+### 1.4.0 (2017-05-21)
+
+  * Added `use_stacktrace_js` option to send stack traces with the logs
+  * Updated Symfony requirement to allow Symfony v4
+
+### 1.3.0 (2016-11-28)
+
+  * Updated Symfony requirement to 2.7+ and switched to using the PSR-3 log interfaces
+
 ### 1.2.5 (2016-02-13)
 
   * Fixed bug in Symfony 3 logger support
