@@ -45,6 +45,15 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(array())
                     ->prototype('scalar')->end()
                 ->end()
+                ->arrayNode('use_stacktrace_js')
+                    ->info('add StackTrace.js as logging provider')
+                    ->canBeEnabled()
+                    ->children()
+                        ->scalarNode('path')
+                            ->defaultValue("https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.3.1/stacktrace.min.js")
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

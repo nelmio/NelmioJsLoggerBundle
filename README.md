@@ -91,6 +91,24 @@ with this configuration:
 The URL matches as a prefix to the script URL, and the message will match if
 the ignored string is found anywhere in the message.
 
+### Optional: Log the whole javascript stack trace with Stacktrace.js
+[Stacktrace.js](http://www.stacktracejs.com/) is a small js-library to create javascript stack traces anywhere. 
+
+    # app/config/config.yml
+    nelmio_js_logger:
+        use_stacktrace_js: ~
+
+If stacktrace.js is loaded before an error occurs, an array with stack trace information (file, line, column) will be logged additionally to the other information.
+
+By default, the stacktracejs javascript file is loaded from https://cdnjs.cloudflare.com/ajax/libs/stacktrace.js/1.3.1/stacktrace.min.js 
+you can change this by setting the path value in the config.yml
+ 
+    # app/config/config.yml
+    nelmio_js_logger:
+        use_stacktrace_js: 
+            path: 'your-url-for-stacktracejs'
+
+
 ## Properly tracking scripts in other domains
 
 If an error occurs in a script from another domain, browser same origin policy will

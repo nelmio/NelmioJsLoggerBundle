@@ -20,6 +20,7 @@
 
         <service id="nelmio_js_logger.twig_extension" class="%nelmio_js_logger.twig_extension.class%">
             <argument type="service" id="router" />
+            <argument>%nelmio_js_logger.stacktrace_js_path%</argument>
             <tag name="twig.extension" />
         </service>
     </services>
