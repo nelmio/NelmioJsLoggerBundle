@@ -12,6 +12,11 @@ class Logger
     private $logger;
 
     /**
+     * @var SanitizerInterface
+     */
+    private $sanitizer;
+
+    /**
      * @var array
      */
     private $allowedLevels;
@@ -43,14 +48,21 @@ class Logger
     /**
      * Constructor
      *
-     * @param LoggerInterface $logger
-     * @param array           $allowedLevels
-     * @param array           $ignoredMessages
-     * @param array           $ignoredURLs
+     * @param LoggerInterface    $logger
+     * @param SanitizerInterface $sanitizer
+     * @param array              $allowedLevels
+     * @param array              $ignoredMessages
+     * @param array              $ignoredURLs
      */
-    public function __construct(LoggerInterface $logger, array $allowedLevels, array $ignoredMessages = array(), array $ignoredURLs = array())
-    {
+    public function __construct(
+        LoggerInterface $logger,
+        SanitizerInterface $sanitizer,
+        array $allowedLevels,
+        array $ignoredMessages = array(),
+        array $ignoredURLs = array()
+    ) {
         $this->logger = $logger;
+        $this->sanitizer = $sanitizer;
         $this->allowedLevels = $allowedLevels;
         $this->ignoredMessages = $ignoredMessages;
         $this->ignoredURLs = $ignoredURLs;
@@ -81,7 +93,11 @@ class Logger
             }
         }
 
-        $this->logger->{$this->levelToMethod[$level]}($message, $context);
+        foreach ($context as $key => $value) {
+            $context[$key] = $this->sanitizer->sanitize($value);
+        }
+
+        $this->logger->{$this->levelToMethod[$level]}($this->sanitizer->sanitize($message), $context);
 
         return true;
     }

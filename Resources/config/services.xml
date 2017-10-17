@@ -6,17 +6,21 @@
 
     <parameters>
         <parameter key="nelmio_js_logger.logger.class">Nelmio\JsLoggerBundle\Logger</parameter>
+        <parameter key="nelmio_js_logger.sanitizer.class">Nelmio\JsLoggerBundle\StringSanitizer</parameter>
         <parameter key="nelmio_js_logger.twig_extension.class">Nelmio\JsLoggerBundle\TwigExtension</parameter>
     </parameters>
 
     <services>
         <service id="nelmio_js_logger.logger" class="%nelmio_js_logger.logger.class%">
             <argument type="service" id="logger" />
+            <argument type="service" id="nelmio_js_logger.sanitizer" />
             <argument>%nelmio_js_logger.allowed_levels%</argument>
             <argument>%nelmio_js_logger.ignore_messages%</argument>
             <argument>%nelmio_js_logger.ignore_url_prefixes%</argument>
             <tag name="monolog.logger" channel="frontend" />
         </service>
+
+        <service id="nelmio_js_logger.sanitizer" class="%nelmio_js_logger.sanitizer.class%" />
 
         <service id="nelmio_js_logger.twig_extension" class="%nelmio_js_logger.twig_extension.class%">
             <argument type="service" id="router" />
