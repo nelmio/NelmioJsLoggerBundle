@@ -1,3 +1,8 @@
+### 1.4.1 (2017-12-15)
+
+  * Fixed logging in a loop when logging appears to fail
+  * Fixed Symfony 3.4+ deprecation warnings
+
 ### 1.4.0 (2017-05-21)
 
   * Added `use_stacktrace_js` option to send stack traces with the logs
