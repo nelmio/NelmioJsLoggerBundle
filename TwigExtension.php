@@ -41,11 +41,11 @@ var stackTraceJsModule = (function (basicModule) {
             function(stackframes) {
                 var req = new XMLHttpRequest();
                     req.onerror = function(err) {
-                                        if (typeof console !== 'undefined' && typeof console.log === 'function') {
-                                            console.log('An error occurred while trying to log an error using stacktrace.js!');
-                                        }
-                                        throw new Error('POST to $url failed.');
-                                   };
+                        if (typeof console !== 'undefined' && typeof console.log === 'function') {
+                            console.log('An error occurred while trying to log an error using stacktrace.js!');
+                        }
+                        basicModule.callSimpleLogger(errorMsg, file, line, col, error);
+                    };
                     req.onreadystatechange = function onreadystatechange() {
                         if (req.readyState === 4) {
                             if (req.status >= 200 && req.status < 400) {
@@ -56,7 +56,7 @@ var stackTraceJsModule = (function (basicModule) {
                                 if (typeof console !== 'undefined' && typeof console.log === 'function') {
                                     console.log('POST to $url failed with status: ' + req.status);
                                 }
-                                throw new Error('POST to $url failed with status: ' + req.status);
+                                basicModule.callSimpleLogger(errorMsg, file, line, col, error);
                             }
                         }
                     };
