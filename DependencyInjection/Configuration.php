@@ -35,6 +35,7 @@ class Configuration implements ConfigurationInterface
                             ->thenInvalid('The level %s is not supported. Please choose one of '.json_encode($levels))
                         ->end()
                     ->end()
+                    ->requiresAtLeastOneElement()
                 ->end()
                 ->arrayNode('ignore_messages')
                     ->defaultValue(array())
