@@ -10,7 +10,7 @@
     </parameters>
 
     <services>
-        <service id="nelmio_js_logger.logger" class="%nelmio_js_logger.logger.class%">
+        <service id="nelmio_js_logger.logger" class="%nelmio_js_logger.logger.class%" public="true">
             <argument type="service" id="logger" />
             <argument>%nelmio_js_logger.allowed_levels%</argument>
             <argument>%nelmio_js_logger.ignore_messages%</argument>
