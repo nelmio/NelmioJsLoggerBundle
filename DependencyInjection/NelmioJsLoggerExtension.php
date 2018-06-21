@@ -28,7 +28,7 @@ class NelmioJsLoggerExtension extends Extension
         $container->setParameter('nelmio_js_logger.allowed_levels', $levels);
         $container->setParameter('nelmio_js_logger.ignore_messages', $config['ignore_messages']);
         $container->setParameter('nelmio_js_logger.ignore_url_prefixes', $config['ignore_url_prefixes']);
-        if (isset($config['use_stacktrace_js'])) {
+        if ($config['use_stacktrace_js']['enabled']) {
             $container->setParameter('nelmio_js_logger.stacktrace_js_path', $config['use_stacktrace_js']['path']);
         } else {
             $container->setParameter('nelmio_js_logger.stacktrace_js_path', null);
