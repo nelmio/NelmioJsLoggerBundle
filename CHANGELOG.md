@@ -1,3 +1,7 @@
+### 1.4.2 (2018-06-27)
+
+  * Minor fixes to DI container config
+
 ### 1.4.1 (2017-12-15)
 
   * Fixed logging in a loop when logging appears to fail
