@@ -22,9 +22,7 @@ class NelmioJsLoggerExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $levels = array_map(function ($level) {
-            return strtolower($level);
-        }, $config['allowed_levels']);
+        $levels = array_map('strtolower', $config['allowed_levels']);
         $container->setParameter('nelmio_js_logger.allowed_levels', $levels);
         $container->setParameter('nelmio_js_logger.ignore_messages', $config['ignore_messages']);
         $container->setParameter('nelmio_js_logger.ignore_url_prefixes', $config['ignore_url_prefixes']);
