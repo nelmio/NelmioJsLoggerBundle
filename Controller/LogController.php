@@ -2,12 +2,19 @@
 
 namespace Nelmio\JsLoggerBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Nelmio\JsLoggerBundle\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class LogController extends Controller
+class LogController
 {
+    private $logger;
+
+    public function __construct(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
     public function createAction(Request $request)
     {
         if(Request::METHOD_GET === $request->getMethod()){
@@ -31,7 +38,7 @@ class LogController extends Controller
             $context['stacktrace'] = $stacktrace;
         }
 
-        if ($this->get('nelmio_js_logger.logger')->write($level, $message, $context)) {
+        if ($this->logger->write($level, $message, $context)) {
             return new Response(base64_decode('R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs'), 201, array('Content-Type' => 'image/gif'));
         }
 
