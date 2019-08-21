@@ -17,6 +17,9 @@
     "require": {
         "symfony/framework-bundle": "^2.7 || ^3.0 || ^4.0"
     },
+    "require-dev": {
+        "twig/twig": "^1.40 || ^2.10"
+    },
     "autoload": {
         "psr-4": { "Nelmio\\JsLoggerBundle\\": "" }
     },
