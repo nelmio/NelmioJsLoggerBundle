@@ -83,7 +83,7 @@ var stackTraceJsModule = (function (basicModule) {
                 if (typeof console !== 'undefined' && typeof console.log === 'function') {
                     console.log('An error occurred while trying to log an error using stacktrace.js!');
                 }
-                basicModule.callSimpleLogger('An error occurred while trying to log an error using stacktrace.js!', err.fileName, err.lineNumber, err.columnNumber, err);
+                basicModule.callSimpleLogger('An error occurred while trying to log an error using stacktrace.js: ' + err.message, err.fileName, err.lineNumber, err.columnNumber, err);
                 basicModule.callSimpleLogger(errorMsg, file, line, col, error);
             });
     };
