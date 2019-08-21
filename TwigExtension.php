@@ -156,6 +156,7 @@ var basicModule = (function () {
         '&level=$level' +
         '&context[file]=' + e(file) +
         '&context[line]=' + e(line) +
+        '&context[column]=' + e(col) +
         '&context[browser]=' + e(navigator.userAgent) +
         '&context[page]=' + e(document.location.href) + basic.fetchCustomContext();
     };
