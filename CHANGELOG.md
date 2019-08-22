@@ -1,3 +1,11 @@
+### 1.5.0 (2019-08-22)
+
+  * Bumped dependencies to PHP 7+ and Symfony 3.4+
+  * Added column where the error occurred in the log context
+  * Fixed Symfony 4.2+ compatibility issues
+  * Fixed compatibility with latest Twig releases
+  * Fixed logging of logging errors to include the message
+
 ### 1.4.2 (2018-06-27)
 
   * Minor fixes to DI container config
