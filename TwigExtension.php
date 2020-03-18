@@ -33,6 +33,9 @@ class TwigExtension extends AbstractExtension
         $addStackTraceJs = <<<JS
 var stackTraceJsModule = (function (basicModule) {
     var stackTraceJs = {};
+    
+    stackTraceJs.appended = false;
+    stackTraceJs.queue = [];
 
     stackTraceJs.isScriptPresent = function isScriptPresent() {
         return ((typeof StackTrace !== 'undefined') && (typeof StackTrace.fromError === 'function'));
@@ -95,35 +98,48 @@ var stackTraceJsModule = (function (basicModule) {
             return;
         }
 
-        var script = document.createElement('script');
-        script.src = '$this->stackTracePath';
-        document.documentElement.appendChild(script);
-
-        script.onload = function() {
-            if (stackTraceJs.isScriptPresent()) {
-                if (!this.executed) {
-                    this.executed = true;
-                    stackTraceJs.sendLogData(errorMsg, file, line, col, error);
-                } 
-            } else {
-                console.log(script);
-                this.onerror();
-            }
-        };
+        if (!stackTraceJs.appended) {
+            var script = document.createElement('script');
+            script.src = '$this->stackTracePath';
+            document.documentElement.appendChild(script);
+            stackTraceJs.appended = true;
     
-        script.onerror = function() {
-            console.log("StackTrace loading has failed, call default logger");
-            basicModule.callSimpleLogger(errorMsg, file, line, col, error)
-        };
-
-        script.onreadystatechange = function() {
-          var self = this;
-          if (this.readyState == "complete" || this.readyState == "loaded") {
-            setTimeout(function() {
-              self.onload()
-            }, 0);
-          }
-        };
+            script.onload = function() {
+                if (stackTraceJs.isScriptPresent()) {
+                    if (!this.executed) {
+                        this.executed = true;
+                        stackTraceJs.sendLogData(errorMsg, file, line, col, error);
+                        var queue = stackTraceJs.queue;
+                        for (var i in queue) {
+                            if (!queue.hasOwnProperty(i)) {
+                                continue;
+                            }
+                            var entry = queue[i];
+                            stackTraceJs.sendLogData(entry[0], entry[1], entry[2], entry[3], entry[4]);    
+                        }
+                    } 
+                } else {
+                    console.log(script);
+                    this.onerror();
+                }
+            };
+        
+            script.onerror = function() {
+                console.log("StackTrace loading has failed, call default logger");
+                basicModule.callSimpleLogger(errorMsg, file, line, col, error)
+            };
+    
+            script.onreadystatechange = function() {
+              var self = this;
+              if (this.readyState == "complete" || this.readyState == "loaded") {
+                setTimeout(function() {
+                  self.onload()
+                }, 0);
+              }
+            };
+        } else {
+            stackTraceJs.queue.push([errorMsg, file, line, col, error]);
+        }
     };
 
     return stackTraceJs;
