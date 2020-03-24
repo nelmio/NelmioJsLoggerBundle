@@ -28,7 +28,7 @@ class TwigExtension extends AbstractExtension
 
     public function initErrorLogger($level = 'error', $includeScriptTag = true)
     {
-        $url = addslashes($this->router->generate('nelmio_js_logger_log'));
+        $escapedUrl = $this->generateEscapedUrl();
 
         $addStackTraceJs = <<<JS
 var stackTraceJsModule = (function (basicModule) {
@@ -55,17 +55,17 @@ var stackTraceJsModule = (function (basicModule) {
                         if (req.readyState === 4) {
                             if (req.status >= 200 && req.status < 400) {
                                 if (typeof console !== 'undefined' && typeof console.log === 'function') {
-                                    console.log('Error logged successfully to $url.');
+                                    console.log('Error logged successfully to $escapedUrl.');
                                 }
                             } else {
                                 if (typeof console !== 'undefined' && typeof console.log === 'function') {
-                                    console.log('POST to $url failed with status: ' + req.status);
+                                    console.log('POST to $escapedUrl failed with status: ' + req.status);
                                 }
                                 basicModule.callSimpleLogger(errorMsg, file, line, col, error);
                             }
                         }
                     };
-                    req.open('post', '$url');
+                    req.open('post', '$escapedUrl');
                     req.setRequestHeader('Content-Type', 'application/json');
                     req.send(JSON.stringify(
                         {
@@ -168,7 +168,7 @@ var basicModule = (function () {
     basic.callSimpleLogger = function callSimpleLogger(errorMsg, file, line, col, error) {
      var e = encodeURIComponent;
 
-    (new Image()).src = '$url?msg=' + e(errorMsg) +
+    (new Image()).src = '$escapedUrl?msg=' + e(errorMsg) +
         '&level=$level' +
         '&context[file]=' + e(file) +
         '&context[line]=' + e(line) +
@@ -211,7 +211,7 @@ JS;
 
     public function initLogger($function = 'log', $includeScriptTag = true)
     {
-        $url = addslashes($this->router->generate('nelmio_js_logger_log'));
+        $escapedUrl = $this->generateEscapedUrl();
 
         $js = <<<JS
 var $function = function(level, message, contextData) {
@@ -230,7 +230,7 @@ var $function = function(level, message, contextData) {
             context += '&context[' + e(key) + ']=' + e(customContext[key]);
         }
     }
-    (new Image()).src = '$url?msg=' + e(message) + '&level=' + e(level) + context;
+    (new Image()).src = '$escapedUrl?msg=' + e(message) + '&level=' + e(level) + context;
 };
 JS;
 
@@ -246,5 +246,10 @@ JS;
     public function getName()
     {
         return 'nelmio_js_logger';
+    }
+
+    private function generateEscapedUrl(): string
+    {
+        return addslashes($this->router->generate('nelmio_js_logger_log', [], UrlGeneratorInterface::ABSOLUTE_URL));
     }
 }
