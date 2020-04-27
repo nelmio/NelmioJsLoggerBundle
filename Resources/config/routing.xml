@@ -5,6 +5,6 @@
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="nelmio_js_logger_log" path="/log">
-        <default key="_controller">NelmioJsLoggerBundle:Log:create</default>
+        <default key="_controller">Nelmio\JsLoggerBundle\Controller\LogController::createAction</default>
     </route>
 </routes>
