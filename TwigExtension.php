@@ -6,6 +6,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @final
+ */
 class TwigExtension extends AbstractExtension
 {
     private $router;
@@ -18,6 +21,9 @@ class TwigExtension extends AbstractExtension
         $this->stackTracePath = $stackTracePath;
     }
 
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
