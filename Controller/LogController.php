@@ -20,7 +20,7 @@ class LogController
         if(Request::METHOD_GET === $request->getMethod()){
             $level = (string) $request->query->get('level');
             $message = (string) $request->query->get('msg');
-            $context = (array) $request->query->get('context', array());
+            $context = (array) $request->query->get('context', '');
 
         } else {
             $postData = json_decode($request->getContent());
