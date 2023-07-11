@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class NelmioJsLoggerExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * @return void
      */
     public function load(array $configs, ContainerBuilder $container)
     {
