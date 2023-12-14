@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="nelmio_js_logger_log" path="/log" methods="GET">
+    <route id="nelmio_js_logger_log" path="/log" methods="GET|POST">
         <default key="_controller">Nelmio\JsLoggerBundle\Controller\LogController::createAction</default>
     </route>
 </routes>
