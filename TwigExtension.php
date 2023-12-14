@@ -21,10 +21,7 @@ class TwigExtension extends AbstractExtension
         $this->stackTracePath = $stackTracePath;
     }
 
-    /**
-     * @return array
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('nelmio_js_error_logger', array($this, 'initErrorLogger'), array('is_safe' => array('html', 'js'))),
@@ -39,14 +36,14 @@ class TwigExtension extends AbstractExtension
         $addStackTraceJs = <<<JS
 var stackTraceJsModule = (function (basicModule) {
     var stackTraceJs = {};
-    
+
     stackTraceJs.appended = false;
     stackTraceJs.queue = [];
 
     stackTraceJs.isScriptPresent = function isScriptPresent() {
         return ((typeof StackTrace !== 'undefined') && (typeof StackTrace.fromError === 'function'));
     };
-        
+
     stackTraceJs.sendLogData = function sendLogData(errorMsg, file, line, col, error) {
         StackTrace.fromError(error).then(
             function(stackframes) {
@@ -75,14 +72,14 @@ var stackTraceJsModule = (function (basicModule) {
                     req.setRequestHeader('Content-Type', 'application/json');
                     req.send(JSON.stringify(
                         {
-                            stack: stackframes, 
-                            msg: errorMsg, 
-                            level: '$level', 
+                            stack: stackframes,
+                            msg: errorMsg,
+                            level: '$level',
                             context: {
-                                file: file, 
-                                line: line, 
-                                column: col, 
-                                userAgent: navigator.userAgent, 
+                                file: file,
+                                line: line,
+                                column: col,
+                                userAgent: navigator.userAgent,
                                 platform: navigator.platform,
                                 customContext: basicModule.fetchCustomContext()
                             }
@@ -96,8 +93,8 @@ var stackTraceJsModule = (function (basicModule) {
                 basicModule.callSimpleLogger(errorMsg, file, line, col, error);
             });
     };
-    
-    
+
+
     stackTraceJs.callStackTraceJs = function callStackTraceJs(errorMsg, file, line, col, error) {
         if (stackTraceJs.isScriptPresent()) {
             stackTraceJs.sendLogData(errorMsg, file, line, col, error);
@@ -109,7 +106,7 @@ var stackTraceJsModule = (function (basicModule) {
             script.src = '$this->stackTracePath';
             document.documentElement.appendChild(script);
             stackTraceJs.appended = true;
-    
+
             script.onload = function() {
                 if (stackTraceJs.isScriptPresent()) {
                     if (!this.executed) {
@@ -121,20 +118,20 @@ var stackTraceJsModule = (function (basicModule) {
                                 continue;
                             }
                             var entry = queue[i];
-                            stackTraceJs.sendLogData(entry[0], entry[1], entry[2], entry[3], entry[4]);    
+                            stackTraceJs.sendLogData(entry[0], entry[1], entry[2], entry[3], entry[4]);
                         }
-                    } 
+                    }
                 } else {
                     console.log(script);
                     this.onerror();
                 }
             };
-        
+
             script.onerror = function() {
                 console.log("StackTrace loading has failed, call default logger");
                 basicModule.callSimpleLogger(errorMsg, file, line, col, error)
             };
-    
+
             script.onreadystatechange = function() {
               var self = this;
               if (this.readyState == "complete" || this.readyState == "loaded") {
@@ -162,15 +159,15 @@ var basicModule = (function () {
         if (oldErrorHandler) {
             oldErrorHandler(errorMsg, file, line, col, error);
         }
-        
+
         if (typeof stackTraceJsModule !== 'undefined') {
             stackTraceJsModule.callStackTraceJs(errorMsg, file, line, col, error);
             return;
         }
-        
+
         basic.callSimpleLogger(errorMsg, file, line, col, error);
     };
-    
+
     basic.callSimpleLogger = function callSimpleLogger(errorMsg, file, line, col, error) {
      var e = encodeURIComponent;
 
@@ -182,22 +179,22 @@ var basicModule = (function () {
         '&context[browser]=' + e(navigator.userAgent) +
         '&context[page]=' + e(document.location.href) + basic.fetchCustomContext();
     };
-    
+
     basic.fetchCustomContext = function fetchCustomContext() {
         var key,
             e = encodeURIComponent,
             customContext = window.nelmio_js_logger_custom_context,
             customContextStr = '';
-         
+
         if ('object' === typeof customContext) {
             for (key in customContext) {
                 customContextStr += '&context[' + e(key) + ']=' + e(customContext[key]);
             }
-        }     
-        
+        }
+
         return customContextStr;
     };
-    
+
     return basic;
 }());
 JS;
