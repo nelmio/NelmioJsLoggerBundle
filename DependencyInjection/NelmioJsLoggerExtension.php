@@ -32,7 +32,7 @@ class NelmioJsLoggerExtension extends Extension
             $container->setParameter('nelmio_js_logger.stacktrace_js_path', null);
         }
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $loader = new Loader\PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.php');
     }
 }
