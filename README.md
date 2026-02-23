@@ -24,7 +24,7 @@ Import the bundle's routing definition in `app/config/routing.yml`:
 
     # app/config/routing.yml
     NelmioJsLoggerBundle:
-        resource: "@NelmioJsLoggerBundle/Resources/config/routing.xml"
+        resource: "@NelmioJsLoggerBundle/Resources/config/routing.php"
         prefix:   /nelmio-js-logger
 
 ## Automated Error Logging ##
